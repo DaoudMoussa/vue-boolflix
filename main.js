@@ -3,12 +3,13 @@ const app = new Vue({
     el: '#root',
     data: {
         foundMovies: [],
+        foundTVShows: [],
         searchedText: '',
-
+        availableFlags: ['en', 'it', 'es', 'fr', 'zh']
     },
     methods: {
         search() {
-            const params = {
+            let params = {
                 api_key: 'a6029345db17cec20afdcb6beac01172',
                 query: this.searchedText,
                 language: "it"
@@ -18,6 +19,8 @@ const app = new Vue({
                     this.foundMovies = result.data.results;
                 });
             this.searchedText = '';
+
+            // axios.get('https://api.themoviedb.org/3/search/tv?api_key=a6029345db17cec20afdcb6beac01172&query=la casa&language=it', {})
         },
         errore() {
                 console.log('errore');

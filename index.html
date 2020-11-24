@@ -27,8 +27,9 @@
                             <p class="original-language">
                                 Lingua originale:
                                 <img :src="'Flag-Images/' + movie.original_language + '.png'"
-                                     class="flag-image" :alt="movie.original_language">
-                                <!-- <span>{{ movie.original_language }}</span> -->
+                                     class="flag-image" :alt="movie.original_language"
+                                     v-if="availableFlags.includes(movie.original_language)">
+                                <span v-else>{{ movie.original_language }}</span>
                             </p>
                             <p class="rating">
                                 <i class="fa-star" v-for="index in 5"
