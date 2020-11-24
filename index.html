@@ -6,37 +6,26 @@
         <meta charset="utf-8">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.0/axios.min.js" integrity="sha512-DZqqY3PiOvTP9HkjIWgjO6ouCbq+dxqWoJZ/Q+zPYNHmlnI2dQnbJ5bxAHpAMw+LXRm4D72EIRXzvcHQtE8/VQ==" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
-        <title>Vue - song list</title>
+        <title>Vue - Boolfix</title>
     </head>
     <body>
         <div id="root">
-            <div class="">
-                <span>Genere: </span>
-                <select v-model="currentGenre">
-                    <option value="">ALL GENRES</option>
-                    <option v-for="genre in genres" :value="genre">{{ genre }}</option>
-                </select>
-            </div>
-            <div>
-                <span>Ordina per: </span>
-                <select v-model="sortingMethod" @change="changeSorting">
-                    <option v-for="(value, key) in songs[0]" :value="key"
-                            v-if="key != 'poster'">{{ key }}</option>
-                </select>
-                <select v-model="sortingOrder" @change="changeSorting">
-                    <option value="-1">Ascendente</option>
-                    <option value="1">Discendente</option>
+            <div class="container">
+                <div class="search-container">
+                    <input v-model="searchedText" @keyUp.enter="search">
+                    <button type="button" @click="search">Cerca</button>
+                </div>
 
-                </select>
-            </div>
-
-            <div class="card-container">
-                <div v-for="song in songs" class="card"
-                    v-if="song.genre == currentGenre || currentGenre == ''">
-                    <img :src="song.poster" :alt="song.title">
-                    <p class="title">{{ song.title }}</p>
-                    <p class="artist">{{ song.author }}</p>
-                    <p class="year">{{ song.year }}</p>
+                <div class="movie-list">
+                    <ul class="card">
+                        <li class="poster-container">
+                            <!-- <img src="" alt=""> -->
+                        </li>
+                        <li class="title"></li>
+                        <li class="original-title"></li>
+                        <li class="original-language"></li>
+                        <li class="rating"></li>
+                    </ul>
                 </div>
             </div>
         </div>
