@@ -5,12 +5,16 @@
     font-family: sans-serif;
 }
 
+body {
+    background: #333;
+}
 .container {
     max-width: 992px;
     margin: auto;
 }
 
 .search-container {
+    margin-top: 10px;
     text-align: center;
 }
 
@@ -21,4 +25,19 @@
 
 .search-container button {
     padding: 0 20px;
+}
+
+.card {
+    margin: 10px 0;
+    padding: 20px;
+    display: flex;
+    list-style-type: none;
+    border-radius: 20px;
+    color: white;
+    border: 1px solid #BBB
+}
+
+.card .poster-container {
+    width: 185px;
+    margin-right: 20px;
 }

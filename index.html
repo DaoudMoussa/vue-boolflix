@@ -17,14 +17,17 @@
                 </div>
 
                 <div class="movie-list">
-                    <ul class="card">
+                    <ul v-for="movie in foundMovies" class="card">
                         <li class="poster-container">
-                            <!-- <img src="" alt=""> -->
+                            <img :src="'http://image.tmdb.org/t/p/w185' + movie.backdrop_path" :alt="movie.title + ' image'">
                         </li>
-                        <li class="title"></li>
-                        <li class="original-title"></li>
-                        <li class="original-language"></li>
-                        <li class="rating"></li>
+                        <li>
+                            <p class="title">Titolo: {{ movie.title }}</p>
+                            <p class="original-title">Titolo originale: {{ movie.original_title }}</p>
+                            <p class="original-language">Lingua originale: {{ movie.original_language }}</p>
+                            <p class="rating">Rating: {{ movie.vote_average }}</p>
+
+                        </li>
                     </ul>
                 </div>
             </div>
