@@ -16,8 +16,14 @@
                     <button type="button" @click="search">Cerca</button>
                 </div>
 
-                <div class="movie-list">
-                    <ul v-for="movie in foundMovies" class="card">
+
+                <div v-if="movies.foundMovies.length > 0" class="dropdown"
+                    @click="toggleMovies">
+                    <h2>Film</h2>
+                    <i :class="movies.visible ? 'fa-caret-down' : 'fa-caret-left'" class="fas"></i>
+                </div>
+                <div class="movie-list" v-if="movies.visible">
+                    <ul v-for="movie in movies.foundMovies" class="card">
                         <li class="poster-container">
                             <img :src="'http://image.tmdb.org/t/p/w185' + movie.backdrop_path" :alt="movie.title + ' image'">
                         </li>
@@ -34,6 +40,36 @@
                             <p class="rating">
                                 <i class="fa-star" v-for="index in 5"
                                     :class="index <= stars(movie.vote_average) ? 'fas' : 'far'">
+                                </i>
+                            </p>
+                        </li>
+                    </ul>
+
+                </div>
+
+                <div v-if="tvShows.foundTVShows.length > 0" class="dropdown"
+                    @click="toggleTVShows">
+                    <h2>Serie TV</h2>
+                    <i :class="tvShows.visible ? 'fa-caret-down' : 'fa-caret-left'" class="fas"></i>
+                </div>
+                <div class="tv-show-list" v-if="tvShows.visible">
+                    <ul v-for="tvShow in tvShows.foundTVShows" class="card">
+                        <li class="poster-container">
+                            <img :src="'http://image.tmdb.org/t/p/w185' + tvShow.backdrop_path" :alt="tvShow.name + ' image'">
+                        </li>
+                        <li>
+                            <p class="title">Titolo: {{ tvShow.name }}</p>
+                            <p class="original-title">Titolo originale: {{ tvShow.original_name }}</p>
+                            <p class="original-language">
+                                Lingua originale:
+                                <img :src="'Flag-Images/' + tvShow.original_language + '.png'"
+                                class="flag-image" :alt="tvShow.original_language"
+                                v-if="availableFlags.includes(tvShow.original_language)">
+                                <span v-else>{{ tvShow.original_language }}</span>
+                            </p>
+                            <p class="rating">
+                                <i class="fa-star" v-for="index in 5"
+                                :class="index <= stars(tvShow.vote_average) ? 'fas' : 'far'">
                                 </i>
                             </p>
                         </li>

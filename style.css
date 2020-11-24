@@ -27,6 +27,20 @@ body {
     padding: 0 20px;
 }
 
+.dropdown {
+    padding: 5px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    font-size: 30px;
+    color: white;
+}
+
+.dropdown i {
+    font-size: 50px;
+}
+
 .card {
     margin: 10px 0;
     padding: 20px;
