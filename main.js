@@ -18,6 +18,9 @@ const app = new Vue({
                     this.foundMovies = result.data.results;
                 });
             this.searchedText = '';
+        },
+        stars(rating) {
+            return Math.round(rating / 2);
         }
     }
 });
