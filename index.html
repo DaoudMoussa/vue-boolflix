@@ -26,10 +26,10 @@
                             <p class="original-title">Titolo originale: {{ movie.original_title }}</p>
                             <p class="original-language">Lingua originale: {{ movie.original_language }}</p>
                             <p class="rating">
-                                <i class="fas fa-star" v-for="star in stars(movie.vote_average)"></i>
-                                <i class="far fa-star" v-for="star in (5 - stars(movie.vote_average))"></i>
+                                <i class="fa-star" v-for="index in 5"
+                                    :class="index <= stars(movie.vote_average) ? 'fas' : 'far'">
+                                </i>
                             </p>
-
                         </li>
                     </ul>
                 </div>
