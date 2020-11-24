@@ -46,3 +46,7 @@ body {
     display: flex;
     color: yellow;
 }
+
+.flag-image {
+    width: 15px;
+}

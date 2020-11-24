@@ -19,6 +19,9 @@ const app = new Vue({
                 });
             this.searchedText = '';
         },
+        errore() {
+                console.log('errore');
+        },
         stars(rating) {
             return Math.round(rating / 2);
         }
