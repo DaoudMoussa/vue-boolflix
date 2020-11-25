@@ -15,7 +15,8 @@ const app = new Vue({
         searching: false,
         searchedText: '',
         lastSearchedText: '',
-        availableFlags: ['en', 'it', 'es', 'fr', 'zh']
+        availableFlags: ['en', 'it', 'es', 'fr', 'zh'],
+        hoverOn: false
     },
     methods: {
         toggleSearchBar() {
@@ -30,7 +31,7 @@ const app = new Vue({
             if(this.searchedText) {
                 this.searching = true;
                 this.lastSearchedText = this.searchedText
-                this.searchedText = '';
+                // this.searchedText = '';
                 const params = {
                     api_key: 'a6029345db17cec20afdcb6beac01172',
                     query: this.lastSearchedText,

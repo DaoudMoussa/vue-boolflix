@@ -10,13 +10,9 @@
 }
 
 body {
-    background: #333;
+    background: #222;
 }
-.container {
-    max-width: 992px;
-    margin: auto;
-    color: white;
-}
+
 
 
 header {
@@ -27,6 +23,7 @@ header {
     align-items: center;
     background-color: black;
     box-shadow: 0 1px 3px 5px rgba(0, 0, 0, 0.15);
+    margin-bottom: 20px;
 }
 
 h1 {
@@ -78,7 +75,14 @@ h1 {
     font-weight: 500;
 }
 
-.dropdown {
+.container {
+    max-width: 992px;
+    margin: auto;
+    color: white;
+}
+
+
+/* .dropdown {
     padding: 5px 30px;
     display: flex;
     align-items: center;
@@ -95,26 +99,37 @@ h1 {
 
 .dropdown i {
     font-size: 50px;
+} */
+
+.movie-list {
+    display: flex;
+    overflow-x: auto;
+    margin: 0 10px;
 }
 
 .card {
-    margin: 10px 0;
-    padding: 20px;
-    display: flex;
+    margin: 0 5px;
     list-style-type: none;
-    border-radius: 20px;
     color: white;
-    border: 1px solid #BBB
 }
 
-.card .poster-container {
-    width: 185px;
-    margin-right: 20px;
+.card:first-child {
+    margin-left: 0;
+}
+
+.card:last-child {
+    margin-right: 0;
+}
+
+.poster-container {
+    display: flex;
+    align-items: center;
+    height: 100%;
 }
 
 .poster-container img {
-    width: 100%;
-    height: 104px;
+    width: 200px;
+    /* height: 104px; */
 }
 
 .card .rating {

@@ -27,29 +27,22 @@
 
             <div v-cloak class="container">
                 <h2 v-if="searching">Ricerca in corso</h2>
-                <h2 v-else-if="lastSearchedText && movies.foundMovies.length && tvShows.foundTVShows.length">Risultati ricerca per: "{{ lastSearchedText }}"</h2>
-                <h2 v-else-if="lastSearchedText">Nessun risultato trovato</h2>
+                <h2 v-else-if="lastSearchedText && !movies.foundMovies.length && !tvShows.foundTVShows.length">Nessun risultato trovato per "{{ lastSearchedText }}"</h2>
 
 
-                <div v-if="movies.foundMovies.length" class="dropdown"
-                    @click="toggleMovies">
-                    <div class="">
-                        <h2>Film</h2>
-                        <span v-if="movies.foundMovies.length">({{ movies.foundMovies.length }} risultati trovati)</span>
-                        <span v-else>Nessun risultato trovato</span>
-                    </div>
-                    <i :class="movies.visible ? 'fa-caret-down' : 'fa-caret-left'" class="fas"></i>
-                </div>
 
-                <div class="movie-list" v-if="movies.visible">
+
+
+                <h2 class="title-section" v-if="movies.foundMovies.length">Film</h2>
+                <div class="movie-list">
                     <ul v-for="movie in movies.foundMovies" class="card">
-                        <li class="poster-container">
+                        <li class="poster-container" v-if="!hoverOn">
                             <img v-if="movie.backdrop_path != null"
-                                :src="'http://image.tmdb.org/t/p/w185' + movie.backdrop_path"
+                                :src="'http://image.tmdb.org/t/p/w342' + movie.poster_path"
                                 :alt="movie.title + ' image'">
                             <img v-else src="https://www.corghi.com/site/corghia_webprofessional_it/myapp_1/webbusiness/images/img-non-disponibile.png" alt="">
                         </li>
-                        <li>
+                        <li v-else>
                             <p class="title">{{ movie.title }}</p>
                             <p v-if="movie.original_title != movie.title"
                                 class="original-title">
@@ -71,7 +64,7 @@
                 </div>
 
 
-                <div v-if="tvShows.foundTVShows.length" class="dropdown"
+                <!-- <div v-if="tvShows.foundTVShows.length" class="dropdown"
                 @click="toggleTVShows">
                     <div class="">
                         <h2>Serie TV</h2>
@@ -104,7 +97,7 @@
                             </p>
                         </li>
                     </ul>
-                </div>
+                </div> -->
             </div>
         </div>
 
