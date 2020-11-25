@@ -11,12 +11,19 @@ const app = new Vue({
             foundTVShows: [],
             visible: false
         },
+        searchStatus: false,
         searching: false,
         searchedText: '',
         lastSearchedText: '',
         availableFlags: ['en', 'it', 'es', 'fr', 'zh']
     },
     methods: {
+        toggleSearchBar() {
+            this.searchStatus = !this.searchStatus;
+            Vue.nextTick(() => {
+                this.$refs.search.focus();
+            });
+        },
         search() {
             this.searchedText = this.searchedText.trim();
 
