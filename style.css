@@ -11,6 +11,7 @@ body {
 .container {
     max-width: 992px;
     margin: auto;
+    color: white;
 }
 
 .search-container {
@@ -33,8 +34,13 @@ body {
     align-items: center;
     justify-content: space-between;
     cursor: pointer;
-    font-size: 30px;
+    font-size: 20px;
     color: white;
+}
+
+.dropdown h2 {
+    display: inline-block;
+    font-size: 30px;
 }
 
 .dropdown i {
@@ -54,6 +60,11 @@ body {
 .card .poster-container {
     width: 185px;
     margin-right: 20px;
+}
+
+.poster-container img {
+    width: 100%;
+    height: 104px;
 }
 
 .card .rating {
