@@ -17,11 +17,13 @@
                 </div>
             </header>
 
-            <div class="container">
+            <div v-cloak class="container">
                 <h2 v-if="searching">Ricerca in corso</h2>
                 <h2 v-else-if="lastSearchedText && movies.foundMovies.length && tvShows.foundTVShows.length">Risultati ricerca per: "{{ lastSearchedText }}"</h2>
                 <h2 v-else-if="lastSearchedText">Nessun risultato trovato</h2>
-                <div v-if="movies.foundMovies.length > 0" class="dropdown"
+
+
+                <div v-if="movies.foundMovies.length" class="dropdown"
                     @click="toggleMovies">
                     <div class="">
                         <h2>Film</h2>

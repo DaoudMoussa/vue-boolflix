@@ -2,6 +2,7 @@
 const app = new Vue({
     el: '#root',
     data: {
+        contentVisibility: 'visible',
         movies: {
             foundMovies: [],
             visible: false
