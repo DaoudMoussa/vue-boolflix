@@ -26,7 +26,6 @@ const app = new Vue({
             if(this.searchedText) {
                 this.searching = true;
                 this.lastSearchedText = this.searchedText
-                // this.searchedText = '';
                 const params = {
                     api_key: 'a6029345db17cec20afdcb6beac01172',
                     query: this.lastSearchedText,
@@ -57,11 +56,5 @@ const app = new Vue({
         stars(rating) {
             return Math.round(rating / 2);
         },
-        // toggleTVShows() {
-        //     this.tvShows.visible = !this.tvShows.visible;
-        // },
-        // toggleMovies() {
-        //     this.movies.visible = !this.movies.visible;
-        // }
     },
 });

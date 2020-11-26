@@ -32,7 +32,6 @@ header {
     align-items: center;
     background-color: black;
     box-shadow: 0 1px 3px 5px rgba(0, 0, 0, 0.15);
-    margin-bottom: 20px;
 }
 
 h1 {
@@ -84,34 +83,30 @@ h1 {
     font-weight: 500;
 }
 
+main {
+    padding: 20px;
+    color: white;
+    position: relative;
+    flex-grow: 1;
+}
+
+main::after {
+    content: '';
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(180deg, rgba(0,0,0,0.4) 0%, rgba(0, 0, 0, 0) 50%, rgba(0,0,0,0.4) 100%);
+}
 
 .container {
     max-width: 992px;
     margin: auto;
-    color: white;
-
-    flex-grow: 1;
+    position: relative;
+    z-index: 2;
 }
-
-
-/* .dropdown {
-    padding: 5px 30px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    cursor: pointer;
-    font-size: 20px;
-    color: white;
-}
-
-.dropdown h2 {
-    display: inline-block;
-    font-size: 30px;
-}
-
-.dropdown i {
-    font-size: 50px;
-} */
 
 .movie-list {
     display: flex;
