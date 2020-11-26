@@ -38,13 +38,13 @@
                     <ul v-for="(movie, index) in movies" class="card"
                         >
                         <li class="poster-container" v-if="cardsMoviesFaces[index]"
-                        @mouseover="changeCardFace(index)">
+                        @mouseover="changeCardFace(index, 'cardsMoviesFaces')">
                             <img v-if="movie.backdrop_path != null"
                                 :src="'http://image.tmdb.org/t/p/w342' + movie.poster_path"
                                 :alt="movie.title + ' image'">
                             <img v-else src="https://www.movienewz.com/img/films/poster-holder.jpg" alt="">
                         </li>
-                        <li v-else class="movie-data" @mouseleave="changeCardFace(index)">
+                        <li v-else class="movie-data" @mouseleave="changeCardFace(index, 'cardsMoviesFaces')">
                             <p class="title">{{ movie.title }}</p>
                             <p v-if="movie.original_title != movie.title"
                                 class="original-title">
@@ -73,7 +73,44 @@
                     </ul>
                 </div>
 
-
+                <h2 class="title-section" v-if="tvShows.length">Serie TV</h2>
+                <div class="movie-list">
+                    <ul v-for="(tvShow, index) in tvShows" class="card">
+                        <li class="poster-container" v-if="cardsTVShowsFaces[index]"
+                        @mouseover="changeCardFace(index, 'cardsTVShowsFaces')">
+                            <img v-if="tvShow.backdrop_path != null"
+                                :src="'http://image.tmdb.org/t/p/w342' + tvShow.poster_path"
+                                :alt="tvShow.name + ' image'">
+                            <img v-else src="https://www.movienewz.com/img/films/poster-holder.jpg" alt="">
+                        </li>
+                        <li v-else class="movie-data" @mouseleave="changeCardFace(index, 'cardsTVShowsFaces')">
+                            <p class="title">{{ tvShow.name }}</p>
+                            <p v-if="tvShow.original_name != tvShow.name"
+                                class="original-title">
+                                Titolo originale: {{ tvShow.original_name }}
+                            </p>
+                            <p class="original-language">
+                                Lingua originale:
+                                <img :src="'Flag-Images/' + tvShow.original_language + '.png'"
+                                     class="flag-image" :alt="tvShow.original_language"
+                                     v-if="availableFlags.includes(tvShow.original_language)">
+                                <span v-else>{{ tvShow.original_language }}</span>
+                            </p>
+                            <p class="rating" v-if="tvShow.vote_average != null">
+                                <i class="fa-star" v-for="indexStar in 5"
+                                    :class="indexStar <= stars(tvShow.vote_average) ? 'fas' : 'far'">
+                                </i>
+                            </p>
+                            <p class="overview" v-if="tvShow.overview">
+                                <span>TRAMA:</span>
+                                {{ tvShow.overview }}
+                            </p>
+                            <p>
+                                <a href="#">show more</a>
+                            </p>
+                        </li>
+                    </ul>
+                </div>
                 <!-- <div v-if="tvShows.foundTVShows.length" class="dropdown"
                 @click="toggleTVShows">
                     <div class="">
@@ -87,7 +124,7 @@
                         <li class="poster-container">
                             <img v-if="tvShow.backdrop_path != null"
                                 :src="'http://image.tmdb.org/t/p/w185' + tvShow.backdrop_path"
-                                :alt="tvShow.title + ' image'">
+                                :alt="tvShow.name + ' image'">
                             <img v-else src="https://www.corghi.com/site/corghia_webprofessional_it/myapp_1/webbusiness/images/img-non-disponibile.png" alt="">
                         </li>
                         <li>
@@ -109,6 +146,12 @@
                     </ul>
                 </div> -->
             </div>
+
+            <footer>
+                <p>
+                    powered by <em>Davide</em>
+                </p>
+            </footer>
         </div>
 
         <script src="main.js" charset="utf-8"></script>

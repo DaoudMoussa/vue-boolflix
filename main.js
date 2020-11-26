@@ -5,10 +5,8 @@ const app = new Vue({
         contentVisibility: 'visible',
         cardsMoviesFaces: [],
         movies: [],
-        tvShows: {
-            foundTVShows: [],
-            visible: false
-        },
+        cardsTVShowsFaces: [],
+        tvShows: [],
         searchStatus: false,
         searching: false,
         searchedText: '',
@@ -40,19 +38,21 @@ const app = new Vue({
                     .then(result => {
                         this.movies = result.data.results;
                         this.cardsMoviesFaces = this.movies.map(element => true);
+                        this.searching = false;
                     });
 
-                this.tvShows.foundTVShows = [];
+                this.tvShows = [];
                 axios.get('https://api.themoviedb.org/3/search/tv', {params})
                     .then(result => {
-                        this.tvShows.foundTVShows = result.data.results;
+                        this.tvShows = result.data.results;
+                        this.cardsTVShowsFaces = this.tvShows.map(element => true);
                         this.searching = false;
                     })
 
             }
         },
-        changeCardFace(index) {
-            Vue.set(this.cardsMoviesFaces, index, !this.cardsMoviesFaces[index])
+        changeCardFace(index, key) {
+            Vue.set(this[key], index, !this[key][index])
         },
         stars(rating) {
             return Math.round(rating / 2);
