@@ -36,19 +36,20 @@
                 <h2 class="title-section" v-if="movies.foundMovies.length">Film</h2>
                 <div class="movie-list">
                     <ul v-for="movie in movies.foundMovies" class="card">
-                        <li class="poster-container" v-if="!hoverOn">
+                        <li class="poster-container" v-if="hoverOn">
                             <img v-if="movie.backdrop_path != null"
                                 :src="'http://image.tmdb.org/t/p/w342' + movie.poster_path"
                                 :alt="movie.title + ' image'">
-                            <img v-else src="https://www.corghi.com/site/corghia_webprofessional_it/myapp_1/webbusiness/images/img-non-disponibile.png" alt="">
+                            <img v-else src="https://www.movienewz.com/img/films/poster-holder.jpg" alt="">
                         </li>
-                        <li v-else>
+                        <li v-else class="movie-data">
                             <p class="title">{{ movie.title }}</p>
                             <p v-if="movie.original_title != movie.title"
                                 class="original-title">
-                                {{ movie.original_title }}
+                                Titolo originale: {{ movie.original_title }}
                             </p>
                             <p class="original-language">
+                                Lingua originale:
                                 <img :src="'Flag-Images/' + movie.original_language + '.png'"
                                      class="flag-image" :alt="movie.original_language"
                                      v-if="availableFlags.includes(movie.original_language)">
@@ -58,6 +59,13 @@
                                 <i class="fa-star" v-for="index in 5"
                                     :class="index <= stars(movie.vote_average) ? 'fas' : 'far'">
                                 </i>
+                            </p>
+                            <p class="overview" v-if="movie.overview">
+                                <span>TRAMA:</span>
+                                {{ movie.overview }}
+                            </p>
+                            <p>
+                                <a href="#">show more</a>
                             </p>
                         </li>
                     </ul>
