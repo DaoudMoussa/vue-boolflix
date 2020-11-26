@@ -27,22 +27,24 @@
 
             <div v-cloak class="container">
                 <h2 v-if="searching">Ricerca in corso</h2>
-                <h2 v-else-if="lastSearchedText && !movies.foundMovies.length && !tvShows.foundTVShows.length">Nessun risultato trovato per "{{ lastSearchedText }}"</h2>
+                <h2 v-else-if="lastSearchedText && !movies.length && !tvShows.foundTVShows.length">Nessun risultato trovato per "{{ lastSearchedText }}"</h2>
 
 
 
 
 
-                <h2 class="title-section" v-if="movies.foundMovies.length">Film</h2>
+                <h2 class="title-section" v-if="movies.length">Film</h2>
                 <div class="movie-list">
-                    <ul v-for="movie in movies.foundMovies" class="card">
-                        <li class="poster-container" v-if="hoverOn">
+                    <ul v-for="(movie, index) in movies" class="card"
+                        >
+                        <li class="poster-container" v-if="cardsMoviesFaces[index]"
+                        @mouseover="changeCardFace(index)">
                             <img v-if="movie.backdrop_path != null"
                                 :src="'http://image.tmdb.org/t/p/w342' + movie.poster_path"
                                 :alt="movie.title + ' image'">
                             <img v-else src="https://www.movienewz.com/img/films/poster-holder.jpg" alt="">
                         </li>
-                        <li v-else class="movie-data">
+                        <li v-else class="movie-data" @mouseleave="changeCardFace(index)">
                             <p class="title">{{ movie.title }}</p>
                             <p v-if="movie.original_title != movie.title"
                                 class="original-title">
@@ -56,8 +58,8 @@
                                 <span v-else>{{ movie.original_language }}</span>
                             </p>
                             <p class="rating" v-if="movie.vote_average != null">
-                                <i class="fa-star" v-for="index in 5"
-                                    :class="index <= stars(movie.vote_average) ? 'fas' : 'far'">
+                                <i class="fa-star" v-for="indexStar in 5"
+                                    :class="indexStar <= stars(movie.vote_average) ? 'fas' : 'far'">
                                 </i>
                             </p>
                             <p class="overview" v-if="movie.overview">

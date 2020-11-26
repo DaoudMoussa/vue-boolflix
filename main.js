@@ -3,10 +3,8 @@ const app = new Vue({
     el: '#root',
     data: {
         contentVisibility: 'visible',
-        movies: {
-            foundMovies: [],
-            visible: false
-        },
+        cardsMoviesFaces: [],
+        movies: [],
         tvShows: {
             foundTVShows: [],
             visible: false
@@ -16,7 +14,6 @@ const app = new Vue({
         searchedText: '',
         lastSearchedText: '',
         availableFlags: ['en', 'it', 'es', 'fr', 'zh'],
-        hoverOn: false
     },
     methods: {
         toggleSearchBar() {
@@ -38,10 +35,11 @@ const app = new Vue({
                     language: "it"
                 }
 
-                this.movies.foundMovies = [];
+                this.movies = [];
                 axios.get('https://api.themoviedb.org/3/search/movie', {params})
                     .then(result => {
-                        this.movies.foundMovies = result.data.results;
+                        this.movies = result.data.results;
+                        this.cardsMoviesFaces = this.movies.map(element => true);
                     });
 
                 this.tvShows.foundTVShows = [];
@@ -53,14 +51,17 @@ const app = new Vue({
 
             }
         },
+        changeCardFace(index) {
+            Vue.set(this.cardsMoviesFaces, index, !this.cardsMoviesFaces[index])
+        },
         stars(rating) {
             return Math.round(rating / 2);
         },
-        toggleTVShows() {
-            this.tvShows.visible = !this.tvShows.visible;
-        },
-        toggleMovies() {
-            this.movies.visible = !this.movies.visible;
-        }
-    }
+        // toggleTVShows() {
+        //     this.tvShows.visible = !this.tvShows.visible;
+        // },
+        // toggleMovies() {
+        //     this.movies.visible = !this.movies.visible;
+        // }
+    },
 });

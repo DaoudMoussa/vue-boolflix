@@ -111,6 +111,9 @@ h1 {
     margin: 0 5px;
     list-style-type: none;
     color: white;
+    position: relative;
+    width: 200px;
+    height: 300px;
 }
 
 .card:first-child {
@@ -139,10 +142,15 @@ h1 {
     background: black;
     box-shadow: 0 0 1px 2px rgba(0, 0, 0, 0.05);
     padding: 15px;
-    display: flex;
-    flex-direction: column;
     overflow: hidden;
+    opacity: 0;
+    animation: getOpacity 0.8s;
+    animation-fill-mode: forwards;
+}
 
+@keyframes getOpacity {
+    from{}
+    to {opacity: 1}
 }
 
 .movie-data > * {
@@ -167,6 +175,7 @@ h1 {
 .card .overview {
     font-size: 12px;
     overflow: hidden;
+    height: 5em;
 }
 
 .card a {
