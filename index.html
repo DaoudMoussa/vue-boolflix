@@ -115,8 +115,8 @@
                                         :class="indexStar <= stars(tvShow.vote_average) ? 'fas' : 'far'">
                                     </i>
                                 </p>
-                                {{ otherTVShowsProperties[index].genres }}
-                                <!-- <p class="genres" v-if="otherTVShowsProperties[index].genres.length">
+
+                                <p class="genres" v-if="otherTVShowsProperties[index].genres.length">
                                     GENERI:
                                     <span v-for="(genre, indexGenre) in otherTVShowsProperties[index].genres">
                                         {{ genre.name }}{{ indexGenre == (otherTVShowsProperties[index].genres.length - 1) ? '.' : ', ' }}
@@ -127,7 +127,7 @@
                                     <span v-for="(actor, indexActor) in otherTVShowsProperties[index].actors">
                                         {{ actor }}{{ indexActor == (otherTVShowsProperties[index].actors.length - 1) ? '.' : ', ' }}
                                     </span>
-                                </p> -->
+                                </p>
 
                                 <p class="overview" v-if="tvShow.overview">
                                     <span>TRAMA:</span>

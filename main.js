@@ -30,9 +30,8 @@ const app = new Vue({
             if(this.searchedText) {
                 this.searching = true;
                 this.searchingMovies = true;
-                this.searchingTVshows = true;
-                this.lastSearchedText = this.searchedText
-                this.otherMoviesProperties = [];
+                this.searchingTVShows = true;
+                this.lastSearchedText = this.searchedText;
 
                 const params = {
                     api_key,
@@ -40,15 +39,17 @@ const app = new Vue({
                     language: "it"
                 }
 
+                this.otherMoviesProperties = [];
                 this.movies = [];
                 axios.get(baseURLAPI + '/search/movie', {params})
                 //copio l'array di film nella variabile di istanza movies
                     .then(result => {
                         this.movies = result.data.results;
                     }).then(() => {
-                        let contatore = 0;
-                        //Dopo aver copiato i film ciclo l'array ottenuto
-                        this.movies.forEach((movie, index) => {
+                        if(this.movies.length) {
+                            let contatore = 0;
+                            //Dopo aver copiato i film ciclo l'array ottenuto
+                            this.movies.forEach((movie, index) => {
                             let movieProperties = {};
 
                             const newParams = {
@@ -86,22 +87,26 @@ const app = new Vue({
                                     contatore++;
                                     if(contatore == this.movies.length) {
                                         this.searchingMovies = false;
-                                        this.searching = !this.searchingMovies && !this.searchingTVShows;
+                                        this.searching = this.searchingMovies || this.searchingTVShows;
                                     }
                                 }));
                         });
+                        } else {
+                            this.searchingMovies = false;
+                            this.searching = !this.searchingMovies && !this.otherTVShowsProperties
+                        }
                     });
 
+                this.otherTVShowsProperties = [];
                 this.tvShows = [];
                 axios.get(baseURLAPI + '/search/tv', {params})
                     .then(result => {
                         this.tvShows = result.data.results;
-                        this.cardsTVShowsFaces = this.tvShows.map(element => true);
-                        // this.searching = false;
                     }).then(() => {
-                        let contatore = 0;
-                        //Dopo aver copiato i film ciclo l'array ottenuto
-                        this.tvShows.forEach((tvShow, index) => {
+                        if(this.tvShows.length) {
+                            let cont = 0;
+                            //Dopo aver copiato i film ciclo l'array ottenuto
+                            this.tvShows.forEach((tvShow, index) => {
                             let tvShowProperties = {};
 
                             const newParams = {
@@ -136,13 +141,18 @@ const app = new Vue({
                                     Vue.set(this.otherTVShowsProperties, index, tvShowProperties)
                                     // this.otherMoviesProperties.push(movieProperties); Non li mette in ordine a causa della casualità dell'arrivo delle api
 
-                                    contatore++;
-                                    if(contatore == this.tvShows.length) {
+                                    cont++;
+                                    console.log(cont);
+                                    if(cont == this.tvShows.length) {
                                         this.searchingTVShows = false;
-                                        this.searching = !this.searchingMovies && !this.searchingTVShows;
+                                        this.searching = this.searchingMovies && this.searchingTVShows;
                                     }
                                 }));
                         });
+                        } else {
+                            this.searchingTVShows = false;
+                            this.searching = !this.searchingMovies && !this.otherTVShowsProperties
+                        }
                     });
 
             }
