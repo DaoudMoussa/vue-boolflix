@@ -3,9 +3,7 @@ const app = new Vue({
     el: '#root',
     data: {
         contentVisibility: 'visible',
-        cardsMoviesFaces: [],
         movies: [],
-        cardsTVShowsFaces: [],
         tvShows: [],
         searchStatus: false,
         searching: false,
@@ -49,9 +47,6 @@ const app = new Vue({
                     })
 
             }
-        },
-        changeCardFace(index, key) {
-            Vue.set(this[key], index, !this[key][index])
         },
         stars(rating) {
             return Math.round(rating / 2);

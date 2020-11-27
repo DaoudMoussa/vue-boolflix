@@ -81,41 +81,40 @@
                 <h2 class="title-section" v-if="tvShows.length">Serie TV</h2>
                 <div class="movie-list">
                     <div v-for="(tvShow, index) in tvShows" class="card">
-                        <div class="poster-container">
-                            <!-- v-if="cardsTVShowsFaces[index]"
-                        @mouseover="changeCardFace(index, 'cardsTVShowsFaces')" -->
-                            <img v-if="tvShow.backdrop_path != null"
-                                :src="'http://image.tmdb.org/t/p/w342' + tvShow.poster_path"
-                                :alt="tvShow.name + ' image'">
-                            <img v-else src="https://www.movienewz.com/img/films/poster-holder.jpg" alt="">
-                        </div>
-                        <div  class="movie-data" >
-                            <!-- @mouseleave="changeCardFace(index, 'cardsTVShowsFaces')"
-                            v-else -->
-                            <p class="title">{{ tvShow.name }}</p>
-                            <p v-if="tvShow.original_name != tvShow.name"
-                                class="original-title">
-                                Titolo originale: {{ tvShow.original_name }}
-                            </p>
-                            <p class="original-language">
-                                Lingua originale:
-                                <img :src="'Flag-Images/' + tvShow.original_language + '.png'"
-                                     class="flag-image" :alt="tvShow.original_language"
-                                     v-if="availableFlags.includes(tvShow.original_language)">
-                                <span v-else>{{ tvShow.original_language }}</span>
-                            </p>
-                            <p class="rating" v-if="tvShow.vote_average != null">
-                                <i class="fa-star" v-for="indexStar in 5"
-                                    :class="indexStar <= stars(tvShow.vote_average) ? 'fas' : 'far'">
-                                </i>
-                            </p>
-                            <p class="overview" v-if="tvShow.overview">
-                                <span>TRAMA:</span>
-                                {{ tvShow.overview }}
-                            </p>
-                            <p>
-                                <a href="#">show more</a>
-                            </p>
+                        <div class="inner-card">
+
+                            <div class="poster-container">
+                                <img v-if="tvShow.backdrop_path != null"
+                                    :src="'http://image.tmdb.org/t/p/w342' + tvShow.poster_path"
+                                    :alt="tvShow.name + ' image'">
+                                <img v-else src="https://www.movienewz.com/img/films/poster-holder.jpg" alt="">
+                            </div>
+                            <div  class="movie-data" >
+                                <p class="title">{{ tvShow.name }}</p>
+                                <p v-if="tvShow.original_name != tvShow.name"
+                                    class="original-title">
+                                    Titolo originale: {{ tvShow.original_name }}
+                                </p>
+                                <p class="original-language">
+                                    Lingua originale:
+                                    <img :src="'Flag-Images/' + tvShow.original_language + '.png'"
+                                         class="flag-image" :alt="tvShow.original_language"
+                                         v-if="availableFlags.includes(tvShow.original_language)">
+                                    <span v-else>{{ tvShow.original_language }}</span>
+                                </p>
+                                <p class="rating" v-if="tvShow.vote_average != null">
+                                    <i class="fa-star" v-for="indexStar in 5"
+                                        :class="indexStar <= stars(tvShow.vote_average) ? 'fas' : 'far'">
+                                    </i>
+                                </p>
+                                <p class="overview" v-if="tvShow.overview">
+                                    <span>TRAMA:</span>
+                                    {{ tvShow.overview }}
+                                </p>
+                                <p>
+                                    <a href="#">show more</a>
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
