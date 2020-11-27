@@ -28,7 +28,7 @@
             <main>
                 <div v-cloak class="container">
                 <h2 v-if="searching">Ricerca in corso</h2>
-                <h2 v-else-if="lastSearchedText && !movies.length && !tvShows.foundTVShows.length">Nessun risultato trovato per "{{ lastSearchedText }}"</h2>
+                <h2 v-else-if="lastSearchedText && !movies.length && !tvShows.length">Nessun risultato trovato per "{{ lastSearchedText }}"</h2>
 
 
 
@@ -36,55 +36,62 @@
 
                 <h2 class="title-section" v-if="movies.length">Film</h2>
                 <div class="movie-list">
-                    <ul v-for="(movie, index) in movies" class="card"
+                    <div v-for="(movie, index) in movies" class="card"
                         >
-                        <li class="poster-container" v-if="cardsMoviesFaces[index]"
-                        @mouseover="changeCardFace(index, 'cardsMoviesFaces')">
-                            <img v-if="movie.backdrop_path != null"
-                                :src="'http://image.tmdb.org/t/p/w342' + movie.poster_path"
-                                :alt="movie.title + ' image'">
-                            <img v-else src="https://www.movienewz.com/img/films/poster-holder.jpg" alt="">
-                        </li>
-                        <li v-else class="movie-data" @mouseleave="changeCardFace(index, 'cardsMoviesFaces')">
-                            <p class="title">{{ movie.title }}</p>
-                            <p v-if="movie.original_title != movie.title"
-                                class="original-title">
-                                Titolo originale: {{ movie.original_title }}
-                            </p>
-                            <p class="original-language">
-                                Lingua originale:
-                                <img :src="'Flag-Images/' + movie.original_language + '.png'"
-                                     class="flag-image" :alt="movie.original_language"
-                                     v-if="availableFlags.includes(movie.original_language)">
-                                <span v-else>{{ movie.original_language }}</span>
-                            </p>
-                            <p class="rating" v-if="movie.vote_average != null">
-                                <i class="fa-star" v-for="indexStar in 5"
-                                    :class="indexStar <= stars(movie.vote_average) ? 'fas' : 'far'">
-                                </i>
-                            </p>
-                            <p class="overview" v-if="movie.overview">
-                                <span>TRAMA:</span>
-                                {{ movie.overview }}
-                            </p>
-                            <p>
-                                <a href="#">show more</a>
-                            </p>
-                        </li>
-                    </ul>
+                        <div class="inner-card">
+
+                            <div class="poster-container">
+                                 <!-- v-if="cardsMoviesFaces[index]"
+                            @mouseover="changeCardFace(index, 'cardsMoviesFaces')" -->
+                                <img v-if="movie.backdrop_path != null"
+                                    :src="'http://image.tmdb.org/t/p/w342' + movie.poster_path"
+                                    :alt="movie.title + ' image'">
+                                <img v-else src="https://www.movienewz.com/img/films/poster-holder.jpg" alt="">
+                            </div>
+                            <div  class="movie-data" @mouseleave="changeCardFace(index, 'cardsMoviesFaces')">
+                                <p class="title">{{ movie.title }}</p>
+                                <p v-if="movie.original_title != movie.title"
+                                    class="original-title">
+                                    Titolo originale: {{ movie.original_title }}
+                                </p>
+                                <p class="original-language">
+                                    Lingua originale:
+                                    <img :src="'Flag-Images/' + movie.original_language + '.png'"
+                                         class="flag-image" :alt="movie.original_language"
+                                         v-if="availableFlags.includes(movie.original_language)">
+                                    <span v-else>{{ movie.original_language }}</span>
+                                </p>
+                                <p class="rating" v-if="movie.vote_average != null">
+                                    <i class="fa-star" v-for="indexStar in 5"
+                                        :class="indexStar <= stars(movie.vote_average) ? 'fas' : 'far'">
+                                    </i>
+                                </p>
+                                <p class="overview" v-if="movie.overview">
+                                    <span>TRAMA:</span>
+                                    {{ movie.overview }}
+                                </p>
+                                <p>
+                                    <a href="#">show more</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <h2 class="title-section" v-if="tvShows.length">Serie TV</h2>
                 <div class="movie-list">
-                    <ul v-for="(tvShow, index) in tvShows" class="card">
-                        <li class="poster-container" v-if="cardsTVShowsFaces[index]"
-                        @mouseover="changeCardFace(index, 'cardsTVShowsFaces')">
+                    <div v-for="(tvShow, index) in tvShows" class="card">
+                        <div class="poster-container">
+                            <!-- v-if="cardsTVShowsFaces[index]"
+                        @mouseover="changeCardFace(index, 'cardsTVShowsFaces')" -->
                             <img v-if="tvShow.backdrop_path != null"
                                 :src="'http://image.tmdb.org/t/p/w342' + tvShow.poster_path"
                                 :alt="tvShow.name + ' image'">
                             <img v-else src="https://www.movienewz.com/img/films/poster-holder.jpg" alt="">
-                        </li>
-                        <li v-else class="movie-data" @mouseleave="changeCardFace(index, 'cardsTVShowsFaces')">
+                        </div>
+                        <div  class="movie-data" >
+                            <!-- @mouseleave="changeCardFace(index, 'cardsTVShowsFaces')"
+                            v-else -->
                             <p class="title">{{ tvShow.name }}</p>
                             <p v-if="tvShow.original_name != tvShow.name"
                                 class="original-title">
@@ -109,8 +116,8 @@
                             <p>
                                 <a href="#">show more</a>
                             </p>
-                        </li>
-                    </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
             </main>
