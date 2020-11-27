@@ -26,124 +26,143 @@
             </header>
 
             <main>
+                <aside class="genres-list">
+                    <h3>Generi film</h3>
+                    <p v-for="(genre, index) in movieGenresList"
+                        @click="activeMoviesFilter = index"
+                        :class="activeMoviesFilter == index ? 'active' : null">
+                        {{ genre.name }}
+                    </p>
+                </aside>
                 <div v-cloak class="container">
-                <h2 v-if="searching">Ricerca in corso</h2>
-                <h2 v-else-if="lastSearchedText && !movies.length && !tvShows.length">Nessun risultato trovato per "{{ lastSearchedText }}"</h2>
+                    <h2 v-if="searching">Ricerca in corso</h2>
+                    <h2 v-else-if="lastSearchedText && !movies.length && !tvShows.length">Nessun risultato trovato per "{{ lastSearchedText }}"</h2>
 
 
 
 
 
-                <h2 class="title-section" v-if="movies.length && !searchingMovies">Film</h2>
-                <div class="movie-list" v-if="movies.length && !searchingMovies">
-                    <div v-for="(movie, index) in movies" class="card">
-                        <div class="inner-card">
-                            <div class="poster-container">
-                                <img v-if="movie.poster_path != null"
-                                    :src="'http://image.tmdb.org/t/p/w342' + movie.poster_path"
-                                    :alt="movie.title + ' image'">
-                                <img v-else src="https://www.movienewz.com/img/films/poster-holder.jpg" alt="">
+                    <h2 class="title-section" v-if="movies.length && !searchingMovies">Film</h2>
+                    <div class="movie-list" v-if="movies.length && !searchingMovies">
+                        <div v-for="(movie, index) in movies" class="card"
+                            v-if="movie.genre_ids.includes(movieGenresList[activeMoviesFilter].id) || !activeMoviesFilter">
+                            <div class="inner-card">
+                                <div class="poster-container">
+                                    <img v-if="movie.poster_path != null"
+                                        :src="'http://image.tmdb.org/t/p/w342' + movie.poster_path"
+                                        :alt="movie.title + ' image'">
+                                    <img v-else src="https://www.movienewz.com/img/films/poster-holder.jpg" alt="">
+                                </div>
+                                <div  class="movie-data">
+                                    <p class="title">{{ movie.title }}</p>
+                                    <p v-if="movie.original_title != movie.title"
+                                        class="original-title">
+                                        Titolo originale: {{ movie.original_title }}
+                                    </p>
+                                    <p class="original-language">
+                                        Lingua originale:
+                                        <img :src="'Flag-Images/' + movie.original_language + '.png'"
+                                             class="flag-image" :alt="movie.original_language"
+                                             v-if="availableFlags.includes(movie.original_language)">
+                                        <span v-else>{{ movie.original_language }}</span>
+                                    </p>
+                                    <p class="rating" v-if="movie.vote_average != null">
+                                        <i class="fa-star" v-for="indexStar in 5"
+                                            :class="indexStar <= stars(movie.vote_average) ? 'fas' : 'far'">
+                                        </i>
+                                    </p>
+                                    <p class="genres" v-if="otherMoviesProperties[index].genres.length">
+                                        GENERI:
+                                        <span v-for="(genre, indexGenre) in otherMoviesProperties[index].genres">
+                                            {{ genre.name }}{{ indexGenre == (otherMoviesProperties[index].genres.length - 1) ? '.' : ', ' }}
+                                        </span>
+                                    </p>
+                                    <p class="actors" v-if="otherMoviesProperties[index].actors.length">
+                                        ATTORI:
+                                        <span v-for="(actor, indexActor) in otherMoviesProperties[index].actors">
+                                            {{ actor }}{{ indexActor == (otherMoviesProperties[index].actors.length - 1) ? '.' : ', ' }}
+                                        </span>
+                                    </p>
+
+                                    <p class="overview" v-if="movie.overview">
+                                        <span>TRAMA:</span>
+                                        {{ movie.overview }}
+                                    </p>
+                                    <p>
+                                        <a href="#">show more</a>
+                                    </p>
+                                </div>
                             </div>
-                            <div  class="movie-data">
-                                <p class="title">{{ movie.title }}</p>
-                                <p v-if="movie.original_title != movie.title"
-                                    class="original-title">
-                                    Titolo originale: {{ movie.original_title }}
-                                </p>
-                                <p class="original-language">
-                                    Lingua originale:
-                                    <img :src="'Flag-Images/' + movie.original_language + '.png'"
-                                         class="flag-image" :alt="movie.original_language"
-                                         v-if="availableFlags.includes(movie.original_language)">
-                                    <span v-else>{{ movie.original_language }}</span>
-                                </p>
-                                <p class="rating" v-if="movie.vote_average != null">
-                                    <i class="fa-star" v-for="indexStar in 5"
-                                        :class="indexStar <= stars(movie.vote_average) ? 'fas' : 'far'">
-                                    </i>
-                                </p>
-                                <p class="genres" v-if="otherMoviesProperties[index].genres.length">
-                                    GENERI:
-                                    <span v-for="(genre, indexGenre) in otherMoviesProperties[index].genres">
-                                        {{ genre.name }}{{ indexGenre == (otherMoviesProperties[index].genres.length - 1) ? '.' : ', ' }}
-                                    </span>
-                                </p>
-                                <p class="actors" v-if="otherMoviesProperties[index].actors.length">
-                                    ATTORI:
-                                    <span v-for="(actor, indexActor) in otherMoviesProperties[index].actors">
-                                        {{ actor }}{{ indexActor == (otherMoviesProperties[index].actors.length - 1) ? '.' : ', ' }}
-                                    </span>
-                                </p>
+                        </div>
+                    </div>
 
-                                <p class="overview" v-if="movie.overview">
-                                    <span>TRAMA:</span>
-                                    {{ movie.overview }}
-                                </p>
-                                <p>
-                                    <a href="#">show more</a>
-                                </p>
+                    <h2 class="title-section" v-if="tvShows.length && !searchingTVShows">Serie TV</h2>
+                    <div class="movie-list" v-if="tvShows.length && !searchingTVShows">
+                        <div v-for="(tvShow, index) in tvShows" class="card"
+                            v-if="tvShow.genre_ids.includes(tvShowsGenresList[activeTVShowsFilter].id) || !activeTVShowsFilter">
+                            <div class="inner-card">
+                                <div class="poster-container">
+                                    <img v-if="tvShow.poster_path != null"
+                                        :src="'http://image.tmdb.org/t/p/w342' + tvShow.poster_path"
+                                        :alt="tvShow.name + ' image'">
+                                    <img v-else src="https://www.movienewz.com/img/films/poster-holder.jpg" alt="">
+                                </div>
+                                <div  class="movie-data" >
+                                    <p class="title">{{ tvShow.name }}</p>
+                                    <p v-if="tvShow.original_name != tvShow.name"
+                                        class="original-title">
+                                        Titolo originale: {{ tvShow.original_name }}
+                                    </p>
+                                    <p class="original-language">
+                                        Lingua originale:
+                                        <img :src="'Flag-Images/' + tvShow.original_language + '.png'"
+                                             class="flag-image" :alt="tvShow.original_language"
+                                             v-if="availableFlags.includes(tvShow.original_language)">
+                                        <span v-else>{{ tvShow.original_language }}</span>
+                                    </p>
+                                    <p class="rating" v-if="tvShow.vote_average != null">
+                                        <i class="fa-star" v-for="indexStar in 5"
+                                            :class="indexStar <= stars(tvShow.vote_average) ? 'fas' : 'far'">
+                                        </i>
+                                    </p>
+
+                                    <p class="genres" v-if="otherTVShowsProperties[index].genres.length">
+                                        GENERI:
+                                        <span v-for="(genre, indexGenre) in otherTVShowsProperties[index].genres">
+                                            {{ genre.name }}{{ indexGenre == (otherTVShowsProperties[index].genres.length - 1) ? '.' : ', ' }}
+                                        </span>
+                                    </p>
+                                    <p class="actors" v-if="otherTVShowsProperties[index].actors.length">
+                                        ATTORI:
+                                        <span v-for="(actor, indexActor) in otherTVShowsProperties[index].actors">
+                                            {{ actor }}{{ indexActor == (otherTVShowsProperties[index].actors.length - 1) ? '.' : ', ' }}
+                                        </span>
+                                    </p>
+
+                                    <p class="overview" v-if="tvShow.overview">
+                                        <span>TRAMA:</span>
+                                        {{ tvShow.overview }}
+                                    </p>
+                                    <p>
+                                        <a href="#">show more</a>
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <h2 class="title-section" v-if="tvShows.length && !searchingTVShows">Serie TV</h2>
-                <div class="movie-list" v-if="tvShows.length && !searchingTVShows">
-                    <div v-for="(tvShow, index) in tvShows" class="card">
-                        <div class="inner-card">
-                            <div class="poster-container">
-                                <img v-if="tvShow.poster_path != null"
-                                    :src="'http://image.tmdb.org/t/p/w342' + tvShow.poster_path"
-                                    :alt="tvShow.name + ' image'">
-                                <img v-else src="https://www.movienewz.com/img/films/poster-holder.jpg" alt="">
-                            </div>
-                            <div  class="movie-data" >
-                                <p class="title">{{ tvShow.name }}</p>
-                                <p v-if="tvShow.original_name != tvShow.name"
-                                    class="original-title">
-                                    Titolo originale: {{ tvShow.original_name }}
-                                </p>
-                                <p class="original-language">
-                                    Lingua originale:
-                                    <img :src="'Flag-Images/' + tvShow.original_language + '.png'"
-                                         class="flag-image" :alt="tvShow.original_language"
-                                         v-if="availableFlags.includes(tvShow.original_language)">
-                                    <span v-else>{{ tvShow.original_language }}</span>
-                                </p>
-                                <p class="rating" v-if="tvShow.vote_average != null">
-                                    <i class="fa-star" v-for="indexStar in 5"
-                                        :class="indexStar <= stars(tvShow.vote_average) ? 'fas' : 'far'">
-                                    </i>
-                                </p>
-
-                                <p class="genres" v-if="otherTVShowsProperties[index].genres.length">
-                                    GENERI:
-                                    <span v-for="(genre, indexGenre) in otherTVShowsProperties[index].genres">
-                                        {{ genre.name }}{{ indexGenre == (otherTVShowsProperties[index].genres.length - 1) ? '.' : ', ' }}
-                                    </span>
-                                </p>
-                                <p class="actors" v-if="otherTVShowsProperties[index].actors.length">
-                                    ATTORI:
-                                    <span v-for="(actor, indexActor) in otherTVShowsProperties[index].actors">
-                                        {{ actor }}{{ indexActor == (otherTVShowsProperties[index].actors.length - 1) ? '.' : ', ' }}
-                                    </span>
-                                </p>
-
-                                <p class="overview" v-if="tvShow.overview">
-                                    <span>TRAMA:</span>
-                                    {{ tvShow.overview }}
-                                </p>
-                                <p>
-                                    <a href="#">show more</a>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                <aside class="genres-list">
+                    <h3>Generi serie TV</h3>
+                    <p v-for="(genre, index) in tvShowsGenresList"
+                        @click="activeTVShowsFilter = index"
+                        :class="activeTVShowsFilter == index ? 'active' : null">
+                        {{ genre.name }}
+                    </p>
+                </aside>
             </main>
 
-            <footer>
+            <footer class="credits">
                 <p>
                     powered by <em>Davide</em>
                 </p>

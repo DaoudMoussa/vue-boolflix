@@ -83,12 +83,16 @@ h1 {
     font-weight: 500;
 }
 
+
 main {
-    padding: 20px;
+    /* padding: 20px; */
     color: white;
     position: relative;
     flex-grow: 1;
+    display: flex;
+    justify-content: space-between;
 }
+
 
 main::after {
     content: '';
@@ -101,8 +105,48 @@ main::after {
     background: linear-gradient(180deg, rgba(0,0,0,0.4) 0%, rgba(0, 0, 0, 0) 50%, rgba(0,0,0,0.4) 100%);
 }
 
+/* main::after {
+    content: '';
+    display: table;
+    clear: both;
+} */
+
+.genres-list {
+    align-items: center;
+    flex-grow: 1;
+    height: 100%;
+    position: relative;
+    z-index: 3;
+    white-space: nowrap;
+}
+
+.genres-list:first-of-type {
+    background: linear-gradient(90deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0) 50%);
+}
+
+.genres-list:last-of-type {
+    background: linear-gradient(-90deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0) 50%);
+}
+
+.genres-list h3 {
+    padding: 3px;
+}
+
+.genres-list p {
+    padding: 5px 15px;
+    border-radius: 5px;
+}
+
+.genres-list p:hover {
+    background: rgba(0,0,0,0.2)
+}
+
+.genres-list p.active {
+    background: rgba(0,0,0,0.5)
+}
+
 .container {
-    max-width: 992px;
+    width: 992px;
     margin: auto;
     position: relative;
     z-index: 2;
@@ -171,7 +215,7 @@ main::after {
     transform: rotateY(180deg);
     position: absolute;
     overflow-y: auto;
-    
+
 }
 
 @keyframes getOpacity {
@@ -215,7 +259,7 @@ main::after {
     width: 15px;
 }
 
-footer {
+#root .credits {
     height: 70px;
     display: flex;
     justify-content: center;
