@@ -35,20 +35,16 @@
 
 
                 <h2 class="title-section" v-if="movies.length">Film</h2>
-                <div class="movie-list">
-                    <div v-for="(movie, index) in movies" class="card"
-                        >
+                <div class="movie-list" v-if="!searching">
+                    <div v-for="(movie, index) in movies" class="card">
                         <div class="inner-card">
-
                             <div class="poster-container">
-                                 <!-- v-if="cardsMoviesFaces[index]"
-                            @mouseover="changeCardFace(index, 'cardsMoviesFaces')" -->
-                                <img v-if="movie.backdrop_path != null"
+                                <img v-if="movie.poster_path != null"
                                     :src="'http://image.tmdb.org/t/p/w342' + movie.poster_path"
                                     :alt="movie.title + ' image'">
                                 <img v-else src="https://www.movienewz.com/img/films/poster-holder.jpg" alt="">
                             </div>
-                            <div  class="movie-data" @mouseleave="changeCardFace(index, 'cardsMoviesFaces')">
+                            <div  class="movie-data">
                                 <p class="title">{{ movie.title }}</p>
                                 <p v-if="movie.original_title != movie.title"
                                     class="original-title">
@@ -66,6 +62,17 @@
                                         :class="indexStar <= stars(movie.vote_average) ? 'fas' : 'far'">
                                     </i>
                                 </p>
+                                <p v-if="movies.length == otherMoviesProperties.length">
+                                    Attori:
+                                    <span v-for="(actor, indexActor) in otherMoviesProperties[index].actors">
+                                        {{ actor }}
+                                        {{ index == otherMoviesProperties.actors.length - 1 ? '.' : ', ' }}
+                                    </span>
+                                </p>
+                                <p v-else>
+                                    attori non disponibili
+                                </p>
+
                                 <p class="overview" v-if="movie.overview">
                                     <span>TRAMA:</span>
                                     {{ movie.overview }}
@@ -82,9 +89,8 @@
                 <div class="movie-list">
                     <div v-for="(tvShow, index) in tvShows" class="card">
                         <div class="inner-card">
-
                             <div class="poster-container">
-                                <img v-if="tvShow.backdrop_path != null"
+                                <img v-if="tvShow.poster_path != null"
                                     :src="'http://image.tmdb.org/t/p/w342' + tvShow.poster_path"
                                     :alt="tvShow.name + ' image'">
                                 <img v-else src="https://www.movienewz.com/img/films/poster-holder.jpg" alt="">
