@@ -170,7 +170,25 @@ const app = new Vue({
                 this.searchingTVShows = false;
                 this.searching = !this.searchingMovies && !this.otherTVShowsProperties
             }
-        }
+        },
+        isGenreInMovies(genre) {
+            let contained = false;
+            this.movies.forEach(movie => {
+                if(movie.genre_ids.includes(genre)) {
+                    contained = true;
+                }
+            });
+            return contained;
+        },
+        isGenreInTVShows(genre) {
+            let contained = false;
+            this.tvShows.forEach(tvShow => {
+                if(tvShow.genre_ids.includes(genre)) {
+                    contained = true;
+                }
+            });
+            return contained;
+        },
     },
     mounted() {
         axios.get(baseURLAPI + '/genre/movie/list', newParams)

@@ -105,16 +105,16 @@ main::after {
     background: linear-gradient(180deg, rgba(0,0,0,0.4) 0%, rgba(0, 0, 0, 0) 50%, rgba(0,0,0,0.4) 100%);
 }
 
-/* main::after {
-    content: '';
-    display: table;
-    clear: both;
-} */
+main .info-box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+}
 
 .genres-list {
-    align-items: center;
     flex-grow: 1;
-    height: 100%;
     position: relative;
     z-index: 3;
     white-space: nowrap;
@@ -135,6 +135,7 @@ main::after {
 .genres-list p {
     padding: 5px 15px;
     border-radius: 5px;
+    cursor: default;
 }
 
 .genres-list p:hover {

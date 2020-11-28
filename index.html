@@ -26,22 +26,22 @@
             </header>
 
             <main>
-                <aside class="genres-list">
+                <aside v-cloak class="genres-list" v-if="movies.length && !searchingMovies">
                     <h3>Generi film</h3>
                     <p v-for="(genre, index) in movieGenresList"
                         @click="activeMoviesFilter = index"
-                        :class="activeMoviesFilter == index ? 'active' : null">
+                        :class="activeMoviesFilter == index ? 'active' : null"
+                        v-if="isGenreInMovies(genre.id) || index == 0">
                         {{ genre.name }}
                     </p>
                 </aside>
-                <div v-cloak class="container">
+
+                <div v-cloak class="info-box">
                     <h2 v-if="searching">Ricerca in corso</h2>
                     <h2 v-else-if="lastSearchedText && !movies.length && !tvShows.length">Nessun risultato trovato per "{{ lastSearchedText }}"</h2>
+                </div>
 
-
-
-
-
+                <div v-cloak class="container">
                     <h2 class="title-section" v-if="movies.length && !searchingMovies">Film</h2>
                     <div class="movie-list" v-if="movies.length && !searchingMovies">
                         <div v-for="(movie, index) in movies" class="card"
@@ -152,11 +152,12 @@
                     </div>
                 </div>
 
-                <aside class="genres-list">
+                <aside v-cloak class="genres-list" v-if="tvShows.length && !searchingTVShows">
                     <h3>Generi serie TV</h3>
                     <p v-for="(genre, index) in tvShowsGenresList"
                         @click="activeTVShowsFilter = index"
-                        :class="activeTVShowsFilter == index ? 'active' : null">
+                        :class="activeTVShowsFilter == index ? 'active' : null"
+                        v-if="isGenreInTVShows(genre.id) || index == 0">
                         {{ genre.name }}
                     </p>
                 </aside>
