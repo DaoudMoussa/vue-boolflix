@@ -42,7 +42,9 @@
                 </div>
 
                 <div v-cloak class="container">
-                    <h2 class="title-section" v-if="movies.length && !searchingMovies">Film</h2>
+                    <h2 class="title-section" v-if="movies.length && !searchingMovies">
+                        Film <span v-if="!lastSearchedText">consigliati</span>
+                    </h2>
                     <div class="movie-list" v-if="movies.length && !searchingMovies">
                         <div v-for="(movie, index) in movies" class="card"
                             v-if="movie.genre_ids.includes(movieGenresList[activeMoviesFilter].id) || !activeMoviesFilter">
@@ -96,7 +98,10 @@
                         </div>
                     </div>
 
-                    <h2 class="title-section" v-if="tvShows.length && !searchingTVShows">Serie TV</h2>
+                    <h2 class="title-section" v-if="tvShows.length && !searchingTVShows">
+                        Serie TV
+                        <span v-if="!lastSearchedText">consigliate</span>
+                    </h2>
                     <div class="movie-list" v-if="tvShows.length && !searchingTVShows">
                         <div v-for="(tvShow, index) in tvShows" class="card"
                             v-if="tvShow.genre_ids.includes(tvShowsGenresList[activeTVShowsFilter].id) || !activeTVShowsFilter">

@@ -16,12 +16,12 @@ const app = new Vue({
         tvShows: [],
         otherTVShowsProperties: [],
         searchStatus: false,
-        searchingTVShows: false,
-        searchingMovies: false,
+        searchingTVShows: true,
+        searchingMovies: true,
+        searching: true,
         searchedText: '',
         lastSearchedText: '',
         availableFlags: ['en', 'it', 'es', 'fr', 'zh'],
-        searching: false,
         movieGenresList: [{id: 0, name: 'Tutti'}],
         tvShowsGenresList: [{id: 0, name: 'Tutti'}],
         activeMoviesFilter: 0,
@@ -200,5 +200,15 @@ const app = new Vue({
             .then(result => {
                 this.tvShowsGenresList.push(...result.data.genres);
             });
+
+        axios.get(baseURLAPI + "/trending/movie/week", {params: {api_key}})
+            .then(response => {
+                this.movies = response.data.results;
+            }).then(() => this.getMoviesProperties());
+
+        axios.get(baseURLAPI + "/trending/tv/week", {params: {api_key}})
+            .then(response => {
+                this.tvShows = response.data.results;
+            }).then(() => this.getTVShowsProperties());
     }
 });
