@@ -1,5 +1,5 @@
 const baseURLAPI = 'https://api.themoviedb.org/3';
-const api_key = 'a6029345db17cec20afdcb6beac01172';
+const api_key = 'b5119e127815f620770654fc2aff061d';
 
 const newParams = {
     params: {
@@ -26,6 +26,7 @@ const app = new Vue({
         tvShowsGenresList: [{id: 0, name: 'Tutti'}],
         activeMoviesFilter: 0,
         activeTVShowsFilter: 0,
+        activeModal: null
     },
     methods: {
         toggleSearchBar() {
@@ -99,9 +100,19 @@ const app = new Vue({
                                 }
                             }
 
+                            let directors = [];
+                            let crew = results[0].data.crew;
+
+                            crew.forEach(item => {
+                                if (item.known_for_department == "Directing" && !directors.includes(item.name)) {
+                                    directors.push(item.name);
+                                }
+                            });
+
                             movieProperties = {
                                 title: movie.title,
                                 actors,
+                                directors,
                                 genres: results[1].data.genres
                             }
 
