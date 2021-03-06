@@ -14,11 +14,11 @@
         <div id="root">
             <header>
                 <div class="left-header">
-                    <h1>CRISFLIX</h1>
+                    <img class="logo" src="https://fontmeme.com/permalink/210306/c072857f28ffed69c9266a55183f4c20.png" alt="netflix-font" border="0">
                 </div>
                 <div class="right-header">
                     <i @click="toggleSearchBar" class="fas fa-search"></i>
-                    <div v-cloak v-if="searchStatus" class="search-box">
+                    <div v-cloak class="search-box">
                         <input ref="search" placeholder="Inserisci testo di ricerca" v-model="searchedText" @keyUp.enter="search">
                         <button type="button" @click="search">Cerca</button>
                     </div>
@@ -90,44 +90,19 @@
                                         <span>TRAMA:</span>
                                         {{ movie.overview }}
                                     </p>
-                                    <p class="modal-opener" @click="activeModal = index">
-                                        show more
+                                    <p v-if="otherMoviesProperties[index].trailerLink" class="modal-opener" @click="activeMovieModal = index">
+                                        watch trailer
                                     </p>
-
                                 </div>
                             </div>
+                        </div>
+                    </div>
 
-                            <div class="movie-modal-container" v-if="activeModal == index">
-                                <div class="movie-modal">
-                                    <div id="movie-info-container">
-                                        <h2>
-                                            {{ movie.title }}
-                                        </h2>
-
-                                        <i class="fas fa-times" @click="activeModal = null"></i>
-
-                                        <p class="release-date">
-                                            {{ movie.release_date.substring(0, 4) }}
-                                        </p>
-                                        <p class="cast" v-if="otherMoviesProperties[index].actors.length">
-                                            ATTORI:
-                                            <span v-for="(actor, indexActor) in otherMoviesProperties[index].actors">
-                                                {{ actor }}{{ indexActor == (otherMoviesProperties[index].actors.length - 1) ? '.' : ', ' }}
-                                            </span>
-                                        </p>
-                                        <p class="directors" v-if="otherMoviesProperties[index].directors.length">
-                                            Regista:
-                                            <span v-for="(director, indexDirector) in otherMoviesProperties[index].directors">
-                                                {{ director }}{{ indexDirector == (otherMoviesProperties[index].directors.length - 1) ? '.' : ', ' }}
-                                            </span>
-                                        </p>
-
-                                        <p class="complete-overview">
-                                            {{ movie.overview }}
-                                        </p>
-                                </div>
-                                </div>
-                            </div>
+                    <!-- Inizio madal movie -->
+                    <div class="movie-modal-container" v-if="activeMovieModal !== null">
+                        <div class="movie-modal">
+                            <i class="fas fa-times" @click="activeMovieModal = null"></i>
+                            <iframe allowfullscreen :src="'https://www.youtube.com/embed/' + otherMoviesProperties[activeMovieModal].trailerLink"></iframe>
                         </div>
                     </div>
 
@@ -182,13 +157,24 @@
                                         {{ tvShow.overview }}
                                     </p>
                                     <p>
-                                        <a href="#">show more</a>
+                                        <p v-if="otherTVShowsProperties[index].trailerLink" class="modal-opener" @click="activeTVShowModal = index">
+                                            watch trailer
+                                        </p>
                                     </p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <!-- Inizio madal tv show -->
+                <div class="movie-modal-container" v-if="activeTVShowModal !== null">
+                    <div class="movie-modal">
+                        <i class="fas fa-times" @click="activeTVShowModal = null"></i>
+                        <iframe allowfullscreen :src="'https://www.youtube.com/embed/' + otherTVShowsProperties[activeTVShowModal].trailerLink"></iframe>
+                    </div>
+                </div>
+
 
                 <aside v-cloak class="genres-list" v-if="(movies.length && !searchingMovies) || (tvShows.length && !searchingTVShows)">
                     <div class="genres-container">
@@ -205,7 +191,11 @@
 
             <footer class="credits">
                 <p>
-                    powered by <em>Davide</em>
+                    powered by
+                    <a rel="noreferrer noopener" target="_blank" href="https://www.linkedin.com/in/daoud-moussa/">
+                        <em>Davide</em>
+                    </a>
+
                 </p>
             </footer>
         </div>

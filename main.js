@@ -7,6 +7,7 @@ const newParams = {
         language: 'it'
     }
 };
+
 const app = new Vue({
     el: '#root',
     data: {
@@ -15,23 +16,35 @@ const app = new Vue({
         otherMoviesProperties: [],
         tvShows: [],
         otherTVShowsProperties: [],
-        searchStatus: false,
         searchingTVShows: true,
         searchingMovies: true,
         searching: true,
         searchedText: '',
         lastSearchedText: '',
         availableFlags: ['en', 'it', 'es', 'fr', 'zh'],
-        movieGenresList: [{id: 0, name: 'Tutti'}],
-        tvShowsGenresList: [{id: 0, name: 'Tutti'}],
+        movieGenresList: [
+            {
+                id: 0,
+                name: 'Tutti'
+            }
+        ],
+        tvShowsGenresList: [
+            {
+                id: 0,
+                name: 'Tutti'
+            }
+        ],
         activeMoviesFilter: 0,
         activeTVShowsFilter: 0,
-        activeModal: null
+        activeMovieModal: null,
+        activeTVShowModal: null
     },
     methods: {
         toggleSearchBar() {
-            this.searchStatus = !this.searchStatus;
-            if(this.searchStatus) {
+            let searchBoxClasses = document.querySelector('.search-box').classList.toggle('active');
+
+
+            if(searchBoxClasses) {
                 Vue.nextTick(() => {
                     this.$refs.search.focus();
                 });
@@ -87,9 +100,11 @@ const app = new Vue({
                     const actorsRequest = axios.get(baseURLAPI + '/movie/' + movie.id + '/credits', newParams);
                     // Richiesta per ricavare i generi
                     const genresRequest = axios.get(baseURLAPI + '/movie/' + movie.id, newParams);
+                    //Richiesta per ricavare i trailer
+                    const trailerRequest = axios.get(baseURLAPI + '/movie/' + movie.id + '/videos', newParams)
 
                     // Quando entrambe le richieste sono tornate:
-                    axios.all([actorsRequest, genresRequest])
+                    axios.all([actorsRequest, genresRequest, trailerRequest])
                         .then(axios.spread((...results) => {
                             // salvo i primi 5 attori di tutti i film trovati in un array
                             let actors = [];
@@ -100,22 +115,21 @@ const app = new Vue({
                                 }
                             }
 
-                            let directors = [];
-                            let crew = results[0].data.crew;
-
-                            crew.forEach(item => {
-                                if (item.known_for_department == "Directing" && !directors.includes(item.name)) {
-                                    directors.push(item.name);
-                                }
-                            });
+                            let trailerLink
+                            if(results[2].data.results.length) {
+                                trailerLink = results[2].data.results[0].key;
+                            } else {
+                                trailerLink = null;
+                            }
 
                             movieProperties = {
                                 title: movie.title,
                                 actors,
-                                directors,
-                                genres: results[1].data.genres
+                                genres: results[1].data.genres,
+                                trailerLink
                             }
 
+                            console.log(movieProperties);
                             Vue.set(this.otherMoviesProperties, index, movieProperties)
                             // this.otherMoviesProperties.push(movieProperties); Non li mette in ordine a causa della casualità dell'arrivo delle api
                             contatore++;
@@ -148,9 +162,10 @@ const app = new Vue({
                 const actorsRequest = axios.get(baseURLAPI + '/tv/' + tvShow.id + '/credits', newParams);
                 // Richiesta per ricavare i generi
                 const genresRequest = axios.get(baseURLAPI + '/tv/' + tvShow.id, newParams);
-
+                // richiesta per il trailer
+                const trailerRequest = axios.get(baseURLAPI + '/tv/' + tvShow.id + '/videos', newParams)
                 // Quando entrambe le richieste sono tornate:
-                axios.all([actorsRequest, genresRequest])
+                axios.all([actorsRequest, genresRequest, trailerRequest])
                     .then(axios.spread((...results) => {
                         // salvo i primi 5 attori di tutti i film trovati in un array
                         let actors = [];
@@ -161,10 +176,19 @@ const app = new Vue({
                             }
                         }
 
+
+                        let trailerLink;
+                        if(results[2].data.results.length) {
+                            trailerLink = results[2].data.results[0].key;
+                        } else {
+                            trailerLink = null;
+                        }
+
                         tvShowProperties = {
                             name: tvShow.name,
                             actors,
-                            genres: results[1].data.genres
+                            trailerLink,
+                            genres: results[1].data.genres,
                         }
 
                         Vue.set(this.otherTVShowsProperties, index, tvShowProperties)

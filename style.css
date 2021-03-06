@@ -45,8 +45,8 @@ header {
     box-shadow: 0 1px 3px 5px rgba(0, 0, 0, 0.15);
 }
 
-h1 {
-    color: #e50913;
+.logo {
+    height: 60px;
 }
 
 .right-header {
@@ -62,19 +62,22 @@ h1 {
 }
 
 .search-box {
-    display: inline-block;
-    width: 0;
-    animation: 0.5s getLong;
-    animation-fill-mode: forwards;
+    display: flex;
+    overflow: hidden;
+    width: 0px;
+    transition: width ease-in-out 0.5s;
+    -webkit-transition:width ease-in-out 0.5s;
+    -moz-transition: width ease-in-out 0.5s;
 }
 
-@keyframes getLong {
-    from {width: 0}
-    to {width: 300px;}
+.search-box.active {
+    width: 300px;
+    max-width: 300px;
+
 }
 
 .search-box input {
-    float: left;
+    overflow: hidden;
     height: 30px;
     padding: 5px;
     width: 80%;
@@ -83,7 +86,7 @@ h1 {
 }
 
 .search-box button {
-    float: left;
+    overflow: hidden;
     height: 30px;
     width: calc(20% - 5px);
     text-align: center;
@@ -92,8 +95,14 @@ h1 {
     border-color: #e50913;
     color: white;
     font-weight: 500;
+    cursor: pointer;
 }
 
+.search-box button:hover {
+    background-color: #d50003;
+    border-color: #d50003;
+
+}
 
 main {
     /* padding: 20px; */
@@ -158,17 +167,50 @@ main .info-box {
 }
 
 .container {
-    width: 992px;
+    max-width: 992px;
+    width: 100%;
     margin: auto;
     position: relative;
-    z-index: 2;
+    z-index: 6;
+}
+
+@media (max-width: 1260px) {
+    .genres-list {
+        display: none;
+    }
+
+    .container {
+
+    }
 }
 
 .movie-list {
+    position: relative;
     display: flex;
     overflow-x: auto;
     padding: 20px 0;
     margin: 0 10px 20px;
+}
+
+::-webkit-scrollbar-track
+{
+    background-color: rgba(229, 9, 19, 0.3);
+    opacity: 0.3;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar
+{
+    height: 10px;
+    width: 10px;
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb
+{
+    border-radius: 10px;
+    background-color: #e50913;
+    opacity: 0.6;
 }
 
 .card {
@@ -184,7 +226,7 @@ main .info-box {
   position: relative;
   width: 100%;
   height: 100%;
-  transition: transform 0.8s;
+  transition: transform 0.5s;
   transform-style: preserve-3d;
 }
 
@@ -225,13 +267,8 @@ main .info-box {
     backface-visibility: hidden;
     transform: rotateY(180deg);
     position: absolute;
-    overflow-y: auto;
-
-}
-
-@keyframes getOpacity {
-    from{}
-    to {opacity: 1}
+    display: flex;
+    flex-direction: column;
 }
 
 .movie-data > * {
@@ -260,6 +297,15 @@ main .info-box {
 
 .card .overview {
     font-size: 12px;
+    flex-grow: 2;
+    overflow-y: auto;
+}
+
+.card .overview::-webkit-scrollbar
+{
+    height: 4px;
+    width: 4px;
+    background-color: transparent;
 }
 
 .card .modal-opener {
@@ -290,7 +336,7 @@ main .info-box {
     left: 0;
     height: 100vh;
     width: 100vw;
-    z-index: 5;
+    z-index: 10;
     background-color: rgba(0, 0, 0, 0.6);
     display: flex;
     align-items: center;
@@ -298,7 +344,35 @@ main .info-box {
 }
 
 .movie-modal {
-    height: 40%;
-    width: 70%;
+    height: 60%;
+    max-height: 400px;
+    width: 80%;
+    max-width: 1000px;
     background: black;
+    position: relative;
+    z-index:100;
+}
+
+.movie-modal iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.fa-times {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #e50913;
+    transform: translate(100%, -100%);
+}
+
+.fa-times:hover {
+    color: #d50003;
+}
+
+footer a {
+    color: white;
 }
