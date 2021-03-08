@@ -73,7 +73,10 @@ const app = new Vue({
                 //copio l'array di film nella variabile di istanza movies
                     .then(result => {
                         this.movies = result.data.results;
-                    }).then(() => this.getMoviesProperties());
+                    }).then(() => {
+                        this.getMoviesProperties();
+                        this.activeMoviesFilter = 0;
+                    });
 
 
                 this.otherTVShowsProperties = [];
@@ -81,7 +84,10 @@ const app = new Vue({
                 axios.get(baseURLAPI + '/search/tv', params)
                     .then(result => {
                         this.tvShows = result.data.results;
-                    }).then(() => this.getTVShowsProperties());
+                    }).then(() => {
+                        this.getTVShowsProperties();
+                        this.activeTVShowsFilter = 0;
+                    });
 
             }
         },
