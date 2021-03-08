@@ -47,7 +47,6 @@ header {
     align-items: center;
     background-color: black;
     box-shadow: 0 1px 3px 5px rgba(0, 0, 0, 0.15);
-    margin-bottom: 20px;
 }
 
 .logo {
@@ -110,7 +109,7 @@ header {
 }
 
 main {
-    /* padding: 20px; */
+    padding-top: 20px;
     color: white;
     position: relative;
     flex-grow: 1;
@@ -190,7 +189,7 @@ main .info-box {
 }
 
 .title-section {
-    background-color: #e50913;
+    background-color: rgba(229, 9, 19);
     padding: 5px 15px;
     border-radius: 10px;
     box-shadow: inset 0 0 1px 2px rgba(0, 0, 0, 0.05);
@@ -224,6 +223,15 @@ main .info-box {
     border-radius: 10px;
     background-color: #e50913;
     opacity: 0.6;
+}
+
+.movie-list::-webkit-scrollbar-track {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+
+.movie-list::-webkit-scrollbar-thumb {
+    background-color: #000;
 }
 
 .card {
@@ -323,10 +331,10 @@ main .info-box {
 
 .card .modal-opener {
     display: inline-block;
-    font-size: 12px;
-    font-weight: 500;
-    text-decoration: underline;
+    font-size: 14px;
     cursor: pointer;
+    color: rgba(229, 9, 19);
+    font-weight: 900;
 }
 
 
