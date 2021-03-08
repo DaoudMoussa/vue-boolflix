@@ -129,7 +129,6 @@ const app = new Vue({
                                 trailerLink
                             }
 
-                            console.log(movieProperties);
                             Vue.set(this.otherMoviesProperties, index, movieProperties)
                             // this.otherMoviesProperties.push(movieProperties); Non li mette in ordine a causa della casualità dell'arrivo delle api
                             contatore++;
