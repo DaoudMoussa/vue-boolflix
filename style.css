@@ -335,8 +335,13 @@ main .info-box {
     cursor: pointer;
     color: rgba(229, 9, 19);
     font-weight: 900;
+    opacity: 0.7;
+    transition: opacity 0.3s;
 }
 
+.card .modal-opener:hover {
+    opacity: 1;
+}
 
 .flag-image {
     width: 15px;
